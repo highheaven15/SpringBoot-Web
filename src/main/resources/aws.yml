@@ -1,0 +1,5 @@
+cloud:
+  aws:
+    credentials:
+      accessKey: 접근키
+      secretKey: 비밀키

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.account.AccountMapper">
+
+    <insert id="insert" >
+        insert into account(member_id, account_no, account_number, account_pw, birth, phone_number)
+        values(#{member_id}, seq_account.nextval, #{account_number}, #{account_pw}, #{birth}, #{phone_number})
+    </insert>
+
+    <select id= "read" resultType="com.example.demo.domain.account.AccountDTO">
+    select * from account
+        where member_id = #{member_id}
+    </select>
+
+    <update id="update">
+        update account set
+        account_number = #{account_number},
+        account_pw = #{account_pw},
+        birth = #{birth},
+        phone_number = #{phone_number}
+        where member_id = #{member_id}
+
+    </update>
+
+    <delete id="delete">
+        delete account
+        where member_id=#{member_id}
+
+    </delete>
+
+    <update id="push">
+        update account set
+        balance = #{balance} + #{money}
+        where member_id=#{member_id}
+    </update>
+
+    <update id="pull">
+        update account set
+        balance =#{balance} - #{money}
+        where member_id=#{member_id}
+    </update>
+
+    <update id="transactionIn">
+        update account set
+        balance = balance + #{money}
+        where account_number = #{account_number}
+
+    </update>
+
+    <update id="transactionOut">
+        update account set
+        balance = balance - #{money}
+        where member_id= #{member_id}
+
+    </update>
+
+    <select id= "findAccountInfo" resultType="com.example.demo.domain.account.AccountDTO">
+        select * from account
+        where account_number = #{account_number}
+    </select>
+
+    <select id= "findMemberAccountInfo" resultType="com.example.demo.domain.account.AccountDTO">
+        select * from account
+        where member_id= #{member_id}
+    </select>
+
+</mapper>

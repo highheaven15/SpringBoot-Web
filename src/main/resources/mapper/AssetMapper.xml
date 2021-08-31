@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.asset.AssetMapper">
+
+    <insert id="insert" parameterType="com.example.demo.domain.asset.AssetVO">
+        insert into asset (asset_no, stock_name, stock_count, stock_price , member_id)
+        values (seq_asset.nextval, #{stock_name}, #{stock_count}, #{stock_price}, #{member_id})
+    </insert>
+
+    <select id="read" resultType="com.example.demo.domain.asset.AssetVO">
+        select * from asset
+        where member_id = #{member_id}
+    </select>
+
+    <update id="modify" parameterType="com.example.demo.domain.asset.AssetVO">
+        update asset set
+        stock_name = #{stock_name},
+        stock_price = #{stock_price},
+        stock_count = #{stock_count}
+        where asset_no = #{asset_no}
+
+    </update>
+
+    <delete id="delete">
+        delete asset
+        where asset_no = #{asset_no}
+    </delete>
+
+
+    <select id="findMemberAssetInfo" resultType="com.example.demo.domain.asset.AssetVO">
+        select * from asset
+        where member_id = #{member_id}
+    </select>
+
+</mapper>

@@ -1,0 +1,15 @@
+spring:
+  devtools:
+    livereload:
+      enabled: true
+
+cloud:
+  aws:
+    s3:
+      bucket: forimg-bucket
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false
+    credentials:
+      instanceProfile: true

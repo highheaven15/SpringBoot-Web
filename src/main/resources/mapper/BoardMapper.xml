@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.board.BoardMapper">
+
+    <sql id="criteria">
+        <trim prefix="(" suffix=") AND " prefixOverrides="OR">
+            <foreach item='type' collection="typeArr">
+                <trim prefix="OR">
+                    <choose>
+                        <when test="type == 'T'.toString()">
+                            title like '%'||#{keyword}||'%'
+                        </when>
+                        <when test="type == 'C'.toString()">
+                            content like '%'||#{keyword}||'%'
+                        </when>
+                        <when test="type == 'W'.toString()">
+                            writer like '%'||#{keyword}||'%'
+                        </when>
+                    </choose>
+                </trim>
+            </foreach>
+        </trim>
+    </sql>
+
+<!--    list.jsp 에서 <select name="type"> <option value="T">제목</option></select>
+    <input type="text" name="keyword" value="${pageMaker.cri.keyword}"/>을 ㄹ
+    form 태그의 action("/board/list")을 사용해서 컨트롤러에 전송
+
+     컨트롤러에 전송 - service 호출(파라미터로 cri를 받음) - mapper호출 (파라미터로 cri를 받음) -
+    service - controller에서 모델에 담아서 - 뷰에 전달
+
+     <choose> 안쪽의 동적 SQL 이 'OR title... OR content ... OR writer' 와 같은 구문을 만들어 냅니다.
+    따라서 바깥쪽에서는 <trim> 을 이용해서 맨 앞에 생성되는 'OR' 를 제거합니다-->
+
+    <select id="getList" resultType="com.example.demo.domain.board.BoardVO">
+        <![CDATA[
+        select * from board where
+        bno > 0 and rownum <= 100
+        ]]>
+    </select>
+
+    <insert id="insert">
+        insert into board (bno, title, content, writer)
+        values (seq_board.nextval, #{title}, #{content}, #{writer})
+    </insert>
+
+    <insert id="insertSelectKey">
+        <selectKey keyProperty="bno" order="BEFORE" resultType="long">
+            select seq_board.nextval from dual
+        </selectKey>
+
+        insert into board (bno, mno, title, content, writer)
+        values (#{bno}, #{mno},#{title}, #{content}, #{writer})
+    </insert>
+
+    <select id="read" resultType="com.example.demo.domain.board.BoardVO">
+        select * from board
+        where bno = #{bno}
+    </select>
+
+    <delete id="delete">
+        delete board where bno = #{bno}
+    </delete>
+
+    <update id="update">
+        update board set
+        title = #{title},
+        content = #{content},
+        writer = #{writer},
+        updateDate = sysdate
+        where bno = #{bno}
+    </update>
+
+
+    <select id="getListWithPaging" resultType="com.example.demo.domain.board.BoardVO">
+        <![CDATA[
+              select
+                bno, title, content, writer, regdate, updatedate, replycnt, hits
+              from (
+                 select /*+INDEX_DESC(board SYS_C005086) */
+                    rownum rn, bno, title, content, writer, regdate, updatedate, replycnt, hits
+                  from
+                    board
+                  where
+          ]]>
+
+        <include refid="criteria"></include>
+
+        <![CDATA[
+        rownum <= #{pageNum} * #{amount}
+        )
+        where
+        rn > (#{pageNum} -1) * #{amount}
+         ]]>
+
+    </select>
+
+    <select id="getTotalCount" resultType="int">
+        select count(*) from board where
+
+        <include refid="criteria"></include>
+
+        bno > 0
+
+    </select>
+
+    <update id="updateReplyCnt">
+
+        update board set replycnt = replycnt + #{amount}
+        where bno = #{bno}
+    </update>
+
+    <update id="updateHit">
+        update board
+        set hits = hits +1
+        where bno = #{bno}
+    </update>
+</mapper>
