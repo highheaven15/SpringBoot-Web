@@ -1,8 +1,6 @@
 # SpringBoot-Web
 비트교육센터 - 주식투자 커뮤니티 TRADERS 웹사이트
 
-
-<h2>주식커뮤니티 사이트 TRADERS </h2>
 <h3>팀원</h3>
 안성경, 임정준, 오준호, 장한옥<br>
 <hr>
