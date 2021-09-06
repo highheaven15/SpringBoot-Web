@@ -5,7 +5,7 @@
 안성경, 임정준, 오준호, 장한옥<br>
 <hr>
 <h3>프로젝트 기간</h3>
-2021.05.01 ~ 2021.6.23<br>
+2021.03.01 ~ 2021.6.25<br>
 <hr>
 <h3>프로젝트 개요</h3>
 TRADERS는 주식 커뮤니티로서, 주식의 종가와 차트, 뉴스에 대한 정보를 확인할 수 있다. 
@@ -18,7 +18,7 @@ JAVA, Python, JavaScript<br>
 SpringBoot, Amazon Linux, Ubuntu, CentOS, Window10 <br>
 <hr>
 <h3>사용 라이브러리</h3> 
-  MATPLOTLIB, Django, Django-RestFramework, Django-Cors-Header<br>
+MATPLOTLIB, Django, Django-RestFramework, Django-Cors-Header<br>
 <hr>
 <h3>개발 도구</h3>
 Intelij, Pycharm, Travis CI, AWS CodeDeploy, Tomcat, Git<br>
@@ -32,18 +32,3 @@ ec2-13-124-213-41.ap-northeast-2.compute.amazonaws.com:8080/main
 <h3>관리자 계정 정보</h3>
 아이디: ask23<br>
 비밀번호: tt680502
-
-<hr>
-<h3>수정 및 개선 내용</h3>
-8.26. <br>
---게시판 글쓰기 기능이 안되는 것을 확인했습니다.<br>
-재배포를 한 결과 정상적으로 작동하였습니다. <br>
---종가 기준 그래프가 나오지 않는걸 확인했습니다. <br>
-<br>
-9.2. <br>
--- 종가 기준 그래프를 나오지 않는 오류 원인을 확인하였습니다.<br>  
--- 오류 수정을 위해 pip 와 pandas, pandas_dataredaer 를 업데이트 했습니다.<br>
--- settings.py 와 stock/urls.py 에서 현재 사용하지 않거나 불필요한 설정들을 삭제했습니다. <br>
-   또 필요한 주석을 추가하고 필요없는 주석은 삭제했습니다.
-
-
